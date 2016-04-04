@@ -55,7 +55,7 @@ parseApp = App
      <*> strOption
          ( long "exchange"
         <> short 'e'
-        <> value "amqp.topic"
+        <> value "amq.topic"
         <> showDefault
         <> help "AMQP exchange" )
      <*> strOption
