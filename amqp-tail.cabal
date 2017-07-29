@@ -5,10 +5,10 @@ description:         Please see README.md
 homepage:            http://github.com/name/project
 license:             BSD3
 license-file:        LICENSE
--- copyright:           
+-- copyright:
 category:            System
 build-type:          Simple
--- extra-source-files:  
+-- extra-source-files:
 cabal-version:       >=1.10
 
 
@@ -18,9 +18,9 @@ executable amqp-tail
 
   main-is:             Main.hs
 
-  other-modules:       
+  other-modules:
 
-  ghc-options:         -threaded -rtsopts -with-rtsopts=-N -Wall -O2
+  ghc-options:         -threaded -Wall -O2
 
   build-depends:       base
                      , amqp

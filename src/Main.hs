@@ -7,6 +7,7 @@ import           Network.AMQP
 import           Options.Applicative
 import qualified Data.Text as T
 import qualified Data.ByteString.Lazy.UTF8 as BU
+import           Data.Monoid
 
 
 data App =
