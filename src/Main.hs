@@ -40,7 +40,7 @@ parseApp = App
         <> value "localhost"
         <> showDefault
         <> help "AMQP host " )
-     <*> (option auto)
+     <*> option auto
          ( long "port"
         <> short 'P'
         <> value 5672
@@ -90,15 +90,19 @@ tailAMQP app@App{..} = do
   -- subscribe to the queue
   _ <- consumeMsgs chan qName Ack (msgCallback app)
 
-  _ <- getLine -- wait for keypress
-  closeConnection conn
-  putStrLn "Connection closed."
+  let loop = do
+        l <- getLine -- wait for keypress
+        if l == "q" || l == "quit"
+          then do closeConnection conn
+                  putStrLn "Quitting ..."
+          else loop
+  loop
 
 
 msgCallback :: App -> (Message, Envelope) -> IO ()
 msgCallback app (msg, env) = do
-  if (bodyTxtOnly app)
-    then putStrLn $ (T.unpack . envRoutingKey) env <> " => " <> (BU.toString (msgBody msg))
-    else putStrLn $ (T.unpack . envRoutingKey) env <> " => " <> (show msg)
+  if bodyTxtOnly app
+    then putStrLn $ (T.unpack . envRoutingKey) env <> " => " <> BU.toString (msgBody msg)
+    else putStrLn $ (T.unpack . envRoutingKey) env <> " => " <> show msg
 
   ackEnv env
